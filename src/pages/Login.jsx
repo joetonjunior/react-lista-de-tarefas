@@ -33,6 +33,8 @@ const Login = () => {
             navigate("/tarefas");
         } catch (error) {
             setCarregando(false);
+            console.log(error);
+            
             alert(error.message)
         }
     }
