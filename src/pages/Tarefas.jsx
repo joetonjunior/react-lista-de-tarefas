@@ -6,6 +6,7 @@ import { BiPencil, BiTrash, BiX } from "react-icons/bi";
 const Tarefas = () => {
 
     const [tarefas, setTarefas] = useState([]);
+    const [dadosOriginais, setDadosOriginais] = useState([]);
     const [formCriar, setFormCriar] = useState(false);
     const [formEditar, setFormEditar] = useState(false);
     const usuario = JSON.parse(sessionStorage.getItem("usuario")) || null;
@@ -18,8 +19,8 @@ const Tarefas = () => {
     const navigate = useNavigate();
 
     function pesquisarTarefa(palavra) {
-        if (palavra.length == 0) {
-            setTarefas(tarefas);
+        if (palavra.length < 3) {
+            setTarefas(dadosOriginais);
             return;
         }
         if (palavra.length >= 3) {
@@ -37,6 +38,7 @@ const Tarefas = () => {
 
             const resposta = await AXIOS.get(`/TAREFAS/${usuario.id}`);
             setTarefas(resposta.data);
+            setDadosOriginais(resposta.data);
 
         } catch (error) {
             console.log("Error: ", error.message);
@@ -127,7 +129,7 @@ const Tarefas = () => {
                         <div>Crie sua primeira tarefa</div>
                     ) : (
                         tarefas.map(tarefa => (
-                            <div className="bg-white p-4 rounded-lg">
+                            <div key={tarefa.id} className="bg-white p-4 rounded-lg">
                                 <h3 className="font-bold mb-4">{tarefa.titulo}</h3>
                                 <p>{tarefa.descricao}</p>
                                 <div className="flex justify-end gap-3">
