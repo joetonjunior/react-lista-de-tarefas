@@ -34,7 +34,6 @@ const Tarefas = () => {
             if (!usuario) {
                 navigate("/");
             }
-
             const resposta = await AXIOS.get(`/tarefas/${usuario.id}`);
             setTarefas(resposta.data);
 
@@ -129,7 +128,7 @@ const Tarefas = () => {
                             <div>Crie sua primeira tarefa</div>
                         ) : (
                             tarefas.map(tarefa => (
-                                <div className="bg-white p-4 rounded-lg">
+                                <div key={tarefa.id} className="bg-white p-4 rounded-lg">
                                     <h3 className="font-bold mb-4">{tarefa.titulo}</h3>
                                     <p>{tarefa.descricao}</p>
                                     <div className="flex justify-end gap-3">
@@ -168,7 +167,7 @@ const Tarefas = () => {
                         ></box-icon>
                     </div>
                     <form onSubmit={criarTarefa} className="flex flex-col">
-                        <label for="titulo" className="uppercase text-xs font-bold mb-2 block">Titulo</label>
+                        <label htmlFor="titulo" className="uppercase text-xs font-bold mb-2 block">Titulo</label>
                         <input
                             ref={tituloCriar}
                             id="titulo"
@@ -177,7 +176,7 @@ const Tarefas = () => {
                             className="pl-3 h-10 border-2 border-slate-400 focus:border-purple-600 duration-150 rounded outline-none mb-4"
                             required
                         />
-                        <label for="descricao" className="uppercase text-xs font-bold mb-2 block">Descrição</label>
+                        <label htmlFor="descricao" className="uppercase text-xs font-bold mb-2 block">Descrição</label>
                         <textarea
                             ref={descricaoCriar}
                             id="descricao"
